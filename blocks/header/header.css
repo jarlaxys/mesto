@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 41px;
+  max-width: 1280px;
+  width: 68.75vw;
+  box-sizing: border-box;
+}
