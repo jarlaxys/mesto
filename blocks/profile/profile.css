@@ -1,0 +1,5 @@
+.profile {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 120px auto 150px;
+}
