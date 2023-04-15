@@ -1,4 +1,17 @@
 .button__like {
   background-color: #FFF;
   border: none;
+  background-image: url(../../../image/like.svg);
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 19px;
+}
+
+.button__like:hover {
+  opacity: .5;
+}
+
+.button__like:active {
+  background-image: url(../../../image/like-dark.svg);
+  opacity: 1;
 }

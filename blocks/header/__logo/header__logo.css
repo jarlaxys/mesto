@@ -3,3 +3,9 @@
   min-width: 103.74px;
   width: 11.09375vw;
 }
+
+@media screen and (max-width: 320px) {
+  .header__logo {
+    padding-left: 27px;
+  }
+}
