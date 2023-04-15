@@ -1,13 +1,8 @@
-.button__add-card {
+.profile__add-card {
   background-color: #000000;
   padding: 0;
   border: 2px solid #FFF;
   border-radius: 2px;
   min-height: 50px;
   align-self: center;
-}
-
-@media screen and (max-width: 320px) {
-  .button__add-card {
-  }
 }
