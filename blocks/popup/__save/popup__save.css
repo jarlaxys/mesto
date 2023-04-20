@@ -10,6 +10,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-top: 18px;
 }
 
 @media screen and (max-width: 850px) {
@@ -17,9 +18,10 @@
     font-size: 14px;
     line-height: 17px;
     padding: 14px 0;
+    margin-top: 15px;
   }
 }
 
 .popup__save:hover {
-  opacity: .8;
+  background-color: rgba(0, 0, 0, 0.8);
 }

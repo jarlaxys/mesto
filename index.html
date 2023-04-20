@@ -17,68 +17,71 @@
       <img src="./image/avatar.jpg" alt="фото профиля" class="profile__avatar">
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
-        <button class="button profile__edit-profile"><img src="./image/EditButton.svg" alt=""></button>
+        <button class="button profile__edit-profile" type="button" aria-label="Редактировать"><img
+            src="./image/EditButton.svg" class="profile__img-edit" alt="Кнопка редактировать профиль"></button>
         <p class="profile__subtitle">Исследователь океана</p>
       </div>
-      <button class="button profile__add-card"><img src="./image/AddButton.svg" alt=""></button>
+      <button class="button profile__add-card" type="button" aria-label="Добавить"><img src="./image/AddButton.svg"
+          class="profile__img-add" alt="Кнопка добавить карточку"></button>
     </section>
     <section class="gallery">
-      <ul class="cards">
+      <ul class="gallery__cards">
         <li class="card">
-          <img src="./image/kirill-pershin-1088404-unsplash.jpg" alt="" class="card__img">
+          <img src="./image/kirill-pershin-1088404-unsplash.jpg" alt="Заброшенная церковь" class="card__img">
           <div class="card__sign">
             <h2 class="card__txt">Карачаевск</h2>
-            <button class="button card__like"></button>
+            <button class="button card__like" type="button" aria-label="Лайк"></button>
           </div>
         </li>
         <li class="card">
-          <img src="./image/kirill-pershin-1404681-unsplash.png" alt="" class="card__img">
+          <img src="./image/kirill-pershin-1404681-unsplash.png" alt="Гора на отдаленном расстоянии" class="card__img">
           <div class="card__sign">
             <h2 class="card__txt">Гора Эльбрус</h2>
-            <button class="button card__like"></button>
+            <button class="button card__like" type="button" aria-label="Лайк"></button>
           </div>
         </li>
         <li class="card">
-          <img src="./image/kirill-pershin-1556355-unsplash.png" alt="" class="card__img">
+          <img src="./image/kirill-pershin-1556355-unsplash.png" alt="Вид на гору через лес на холме" class="card__img">
           <div class="card__sign">
             <h2 class="card__txt">Домбай</h2>
-            <button class="button card__like"></button>
+            <button class="button card__like" type="button" aria-label="Лайк"></button>
           </div>
         </li>
         <li class="card">
-          <img src="./image/kirill-pershin-1088404-unsplash.jpg" alt="" class="card__img">
+          <img src="./image/kirill-pershin-1088404-unsplash.jpg" alt="Заброшенная церковь" class="card__img">
           <div class="card__sign">
             <h2 class="card__txt">Гора Эльбрус</h2>
-            <button class="button card__like"></button>
+            <button class="button card__like" type="button" aria-label="Лайк"></button>
           </div>
         </li>
         <li class="card">
-          <img src="./image/kirill-pershin-1404681-unsplash.png" alt="" class="card__img">
+          <img src="./image/kirill-pershin-1404681-unsplash.png" alt="Гора на отдаленном расстоянии" class="card__img">
           <div class="card__sign">
             <h2 class="card__txt">Домбай</h2>
-            <button class="button card__like"></button>
+            <button class="button card__like" type="button" aria-label="Лайк"></button>
           </div>
         </li>
         <li class="card">
-          <img src="./image/kirill-pershin-1556355-unsplash.png" alt="" class="card__img">
+          <img src="./image/kirill-pershin-1556355-unsplash.png" alt="Вид на гору через лес на холме" class="card__img">
           <div class="card__sign">
             <h2 class="card__txt">Карачаево-Черкесия</h2>
-            <button class="button card__like"></button>
+            <button class="button card__like" type="button" aria-label="Лайк"></button>
           </div>
         </li>
       </ul>
     </section>
   </main>
   <footer class="footer">
-    <span class="footer__span">© 2020 Mesto Russia</span>
+    <p class="footer__span">© 2020 Mesto Russia</p>
   </footer>
   <div class="popup">
     <div class="popup__container">
-      <button class="popup__close"><img src="./image/CloseIcon.svg" alt=""></button>
-      <form class="popup__content">
-        <p class="popup__title">Редактировать профиль</p>
-        <input type="text" class="popup__name">
-        <input type="text" class="popup__info">
+      <button class="popup__close" type="button"><img src="./image/CloseIcon.svg" class="popup__img-close"
+          alt="Кнопка закрытия формы"></button>
+      <form class="popup__content" name="edit-profile">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" class="popup__input popup__input_info_name" name="name">
+        <input type="text" class="popup__input popup__input_info_job" name="job">
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
     </div>

@@ -7,11 +7,15 @@
   padding: 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
 }
 
 @media screen and (max-width: 850px) {
   .popup__close {
     right: 0;
+    width: 20px;
+    height: 20px;
   }
 }
 
