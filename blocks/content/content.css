@@ -9,7 +9,7 @@
   flex: 1;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 450px) {
   .content {
     width: 88.125vw;
     gap: 36px;
