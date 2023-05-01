@@ -1,0 +1,11 @@
+.card__delite {
+  background-color: transparent;
+  border: none;
+  background-image: url(../../../image/Trash.svg);
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 19.3px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
