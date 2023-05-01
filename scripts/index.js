@@ -81,6 +81,16 @@ initialCards.forEach(item => {
   cardElements.querySelector('.card__img').alt = item.name;
   cardElements.querySelector('.card__txt').textContent = item.name;
 
+  cardElements.querySelector('.card__delite').addEventListener('click', () => {
+    cardElements.remove();
+  });
+
+  const like = cardElements.querySelector('.card__like');
+
+  like.addEventListener('click', () => {
+    like.classList.toggle('card__like_active');
+  });
+
   cardsGallery.prepend(cardElements);
 })
 
@@ -94,6 +104,16 @@ function createFormSubmit(evt) {
   cardElements.querySelector('.card__img').alt = titleInputElement.value;
   cardElements.querySelector('.card__txt').textContent = titleInputElement.value;
 
+  cardElements.querySelector('.card__delite').addEventListener('click', () => {
+    cardElements.remove();
+  })
+
+  const like = cardElements.querySelector('.card__like');
+
+  like.addEventListener('click', () => {
+    like.classList.toggle('card__like_active');
+  });
+
   cardsGallery.prepend(cardElements);
   linkInputElement.value = '';
   titleInputElement.value = '';
@@ -103,3 +123,4 @@ function createFormSubmit(evt) {
 popupAddButtonElement.addEventListener('click', openPopupAdd);
 popupAddCloseButtonElement.addEventListener('click', closePopupAdd);
 popupAddForm.addEventListener('submit', createFormSubmit);
+
