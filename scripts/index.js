@@ -103,6 +103,9 @@ function createFormSubmit(evt) {
   const cardsGallery = document.querySelector('.gallery__cards');
   const cardElements = cardTemplate.querySelector('.card').cloneNode(true);
 
+  const link = linkInputElement.value;
+  const title = titleInputElement.value;
+
   cardElements.querySelector('.card__img').src = linkInputElement.value;
   cardElements.querySelector('.card__img').alt = titleInputElement.value;
   cardElements.querySelector('.card__txt').textContent = titleInputElement.value;
@@ -112,11 +115,11 @@ function createFormSubmit(evt) {
     const page = document.querySelector('.page');
     const imgElement = imgTemplate.querySelector('.popup-img').cloneNode(true);
 
-    imgElement.querySelector('.popup-img__item').src = linkInputElement.value;
+    imgElement.querySelector('.popup-img__item').src = link;
     imgElement.querySelector('.popup-img__close').addEventListener('click', () => {
       imgElement.remove();
     });
-    imgElement.querySelector('.popup-img__title').textContent = titleInputElement.value;
+    imgElement.querySelector('.popup-img__title').textContent = title;
 
     page.prepend(imgElement);
   })

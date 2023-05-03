@@ -10,4 +10,18 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
+  transition: visibility 0s, opacity 0.5s linear;
+  animation: open-img 0.5s;
+}
+
+@keyframes open-img {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
 }
