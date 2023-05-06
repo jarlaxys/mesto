@@ -49,6 +49,7 @@ function newCard(name, link) {
     openPopup(popupImgElement);
 
     popupImgElement.querySelector('.popup__img').src = link;
+    popupImgElement.querySelector('.popup__img').alt = name;
     popupImgElement.querySelector('.popup__subtitle').textContent = name;
   })
 
