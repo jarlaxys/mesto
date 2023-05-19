@@ -117,3 +117,15 @@ initialCards.forEach((item) => {
   const cardsGallery = document.querySelector('.gallery__cards');
   cardsGallery.prepend(newCard(item.name, item.link));
 });
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Escape') {
+    closePopup(popupImgElement);
+    closePopup(popupElement);
+    closePopup(popupEditElement);
+  }
+});
+
+
+
+
