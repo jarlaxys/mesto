@@ -19,12 +19,32 @@ const linkInputElement = popupElement.querySelector('.popup__input_info_link');
 
 const popupImgElement = document.querySelector('#img-popup');
 
+function closePopupEsc(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(popupImgElement);
+    closePopup(popupElement);
+    closePopup(popupEditElement);
+  }
+}
+
+function closePopupOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(popupImgElement);
+    closePopup(popupElement);
+    closePopup(popupEditElement);
+  }
+}
+
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
+  popupElement.addEventListener('keydown', closePopupEsc);
+  popupElement.addEventListener('click', closePopupOverlay);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
+  popupElement.removeEventListener('keydown', closePopupEsc);
+  popupElement.removeEventListener('click', closePopupOverlay);
 }
 
 function handleFormSubmit(evt) {
@@ -118,13 +138,8 @@ initialCards.forEach((item) => {
   cardsGallery.prepend(newCard(item.name, item.link));
 });
 
-document.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Escape') {
-    closePopup(popupImgElement);
-    closePopup(popupElement);
-    closePopup(popupEditElement);
-  }
-});
+
+
 
 
 
