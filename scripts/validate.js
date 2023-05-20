@@ -9,7 +9,7 @@ function hideError (inputElement, errorElement, config) {
 }
 
 function disabledButton (buttonElement, config) {
-  buttonElement.disabled = 'disabled';
+  buttonElement.disabled = true;
   buttonElement.classList.add(config.inactiveButtonClass);
 }
 
@@ -35,19 +35,13 @@ function checkInputValidity(inputElement, formElement, config) {
   } else {
     hideError (inputElement, errorElement, config)
   }
-
-  console.log(errorElement)
 }
 
 function setEventListener(formElement, config) {
   const inputsList = formElement.querySelectorAll(config.inputSelector);
   const submitButtonElement = formElement.querySelector(config.submitButtonSelector);
 
-  toggleButtonState(submitButtonElement, formElement.checkValidity(), config)
-
-  formElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-  })
+  toggleButtonState(submitButtonElement, formElement.checkValidity(), config);
 
   inputsList.forEach((inputItem) => {
     inputItem.addEventListener('input', () => {

@@ -21,31 +21,31 @@ const popupImgElement = document.querySelector('#img-popup');
 
 function closePopupEsc(evt) {
   if (evt.key === 'Escape') {
-    closePopup(popupImgElement);
-    closePopup(popupElement);
-    closePopup(popupEditElement);
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
   }
 }
 
 function closePopupOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    closePopup(popupImgElement);
-    closePopup(popupElement);
-    closePopup(popupEditElement);
+    closePopup(evt.target);
   }
 }
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
-  popupElement.addEventListener('keydown', closePopupEsc);
-  popupElement.addEventListener('click', closePopupOverlay);
-}
+  document.addEventListener('keydown', closePopupEsc);
+  }
 
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
-  popupElement.removeEventListener('keydown', closePopupEsc);
-  popupElement.removeEventListener('click', closePopupOverlay);
+  document.removeEventListener('keydown', closePopupEsc);
 }
+
+const popups = document.querySelectorAll('.popup')
+popups.forEach((popupElement) => {
+  popupElement.addEventListener('click', closePopupOverlay)
+})
 
 function handleFormSubmit(evt) {
   evt.preventDefault();
@@ -97,6 +97,7 @@ function createFormSubmit(evt) {
   popupAddForm.reset();
 
   closePopup(popupElement);
+  enableValidation(configFormSelector);
 }
 
 //открывает попап редактирования
@@ -106,30 +107,21 @@ popupEditButtonElement.addEventListener('click', function () {
   infoInputElement.value = infoElement.textContent;
 });
 
-//закрывает попап редактирования
-popupEditCloseButtonElement.addEventListener('click', function () {
-  closePopup(popupEditElement);
-});
-
 //отправляет форму редактирования
 popupEditForm.addEventListener('submit', handleFormSubmit);
 
 //открывает попап добавления карточки
 popupAddButtonElement.addEventListener('click', function () {
-  openPopup(popupElement)
-});
-
-//закрывает попап добавления карточки
-popupAddCloseButtonElement.addEventListener('click', function () {
-  closePopup(popupElement);
+  openPopup(popupElement);
 });
 
 //отправляет форму добавления карточки
 popupAddForm.addEventListener('submit', createFormSubmit);
 
-//закрывает попап с картинкой
-popupImgElement.querySelector('#img-close').addEventListener('click', () => {
-  closePopup(popupImgElement);
+//закрывает попапы
+document.querySelectorAll('.popup__close').forEach(button => {
+  const buttonsPopup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(buttonsPopup));
 });
 
 //добавляет карточки из массива
@@ -137,10 +129,3 @@ initialCards.forEach((item) => {
   const cardsGallery = document.querySelector('.gallery__cards');
   cardsGallery.prepend(newCard(item.name, item.link));
 });
-
-
-
-
-
-
-

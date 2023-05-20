@@ -10,7 +10,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: 31px;
+  margin-top: 25px;
 }
 
 @media screen and (max-width: 850px) {
@@ -26,4 +26,11 @@
 .popup__save:hover {
   background-color: rgba(0, 0, 0, 0.8);
   color: #FFF;
+}
+
+.popup__save:hover:disabled {
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: auto;
 }
