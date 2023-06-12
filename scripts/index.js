@@ -1,23 +1,8 @@
-import {initialCards} from './cards.js';
-import {Card} from './card.js';
-import {FormValidator, configFormSelector, formSelector} from './validate.js';
+import { initialCards } from './cards.js';
+import { Card } from './card.js';
+import { FormValidator } from './formValidator.js';
+import { formSelector, configFormSelector, popupEditElement, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, nameElement, infoElement, popupElement, popupAddButtonElement, popupAddForm, titleInputElement, linkInputElement } from './constants.js';
 
-const popupEditElement = document.querySelector('#edit-popup');
-const popupEditButtonElement = document.querySelector('.profile__edit-profile');
-const popupEditForm = popupEditElement.querySelector('.popup__content');
-
-const nameInputElement = popupEditElement.querySelector('.popup__input_info_name');
-const infoInputElement = popupEditElement.querySelector('.popup__input_info_job');
-
-const nameElement = document.querySelector('.profile__title');
-const infoElement = document.querySelector('.profile__subtitle');
-
-const popupElement = document.querySelector('#add-popup');
-const popupAddButtonElement = document.querySelector('.profile__add-card');
-const popupAddForm = popupElement.querySelector('.popup__content');
-
-const titleInputElement = popupElement.querySelector('.popup__input_info_title');
-const linkInputElement = popupElement.querySelector('.popup__input_info_link');
 
 function closePopupEsc(evt) {
   if (evt.key === 'Escape') {
@@ -47,7 +32,7 @@ popups.forEach((popupElement) => {
   popupElement.addEventListener('click', closePopupOverlay)
 })
 
-function handleFormSubmit(evt) {
+function editFormSubmit(evt) {
   evt.preventDefault();
   nameElement.textContent = nameInputElement.value;
   infoElement.textContent = infoInputElement.value;
@@ -60,29 +45,32 @@ function createFormSubmit(evt) {
 
   const cardsGallery = document.querySelector('.gallery__cards');
 
-  const card = new Card (titleInputElement.value, linkInputElement.value, '#card');
+  const card = new Card(titleInputElement.value, linkInputElement.value, '#card');
   const cardElement = card.newCard();
   cardsGallery.prepend(cardElement);
 
   popupAddForm.reset();
 
   closePopup(popupElement);
-  validationForm();
+  addCardFormValidation.disabledButton();
 }
 
-//открывает попап редактирования
-popupEditButtonElement.addEventListener('click', function () {
+function openPopupEdit() {
   openPopup(popupEditElement);
   nameInputElement.value = nameElement.textContent;
   infoInputElement.value = infoElement.textContent;
-});
+}
+
+//открывает попап редактирования
+popupEditButtonElement.addEventListener('click', openPopupEdit);
 
 //отправляет форму редактирования
-popupEditForm.addEventListener('submit', handleFormSubmit);
+popupEditForm.addEventListener('submit', editFormSubmit);
 
 //открывает попап добавления карточки
 popupAddButtonElement.addEventListener('click', function () {
   openPopup(popupElement);
+  addCardFormValidation.resetValidation();
 });
 
 //отправляет форму добавления карточки
@@ -98,15 +86,13 @@ document.querySelectorAll('.popup__close').forEach(button => {
 initialCards.forEach((item) => {
   const cardsGallery = document.querySelector('.gallery__cards');
 
-  const card = new Card (item.name, item.link, '#card');
+  const card = new Card(item.name, item.link, '#card');
   const cardElement = card.newCard();
   cardsGallery.prepend(cardElement);
 });
 
-function validationForm() {
-  document.querySelectorAll('.popup__content').forEach((form) => {
-    new FormValidator(formSelector, configFormSelector).enableValidation();
-  })
-}
+const addCardFormValidation = new FormValidator(popupAddForm, configFormSelector);
+const editCardFormValidation = new FormValidator(popupEditForm, configFormSelector);
 
-validationForm();
+addCardFormValidation.enableValidation();
+editCardFormValidation.enableValidation();
