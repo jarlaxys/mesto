@@ -22,6 +22,4 @@ const configFormSelector = {
   inputErrorClass: 'popup__input_state_invalid',
 }
 
-const formSelector = '.popup__content';
-
-export { formSelector, configFormSelector, popupEditElement, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, nameElement, infoElement, popupElement, popupAddButtonElement, popupAddForm, titleInputElement, linkInputElement }
+export { configFormSelector, popupEditElement, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, nameElement, infoElement, popupElement, popupAddButtonElement, popupAddForm, titleInputElement, linkInputElement }
