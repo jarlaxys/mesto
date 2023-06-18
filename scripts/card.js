@@ -1,4 +1,4 @@
-import { openPopup } from './index.js';
+import { openPopup } from '../src/index.js';
 
 export class Card {
   constructor(name, link, templateElement) {
