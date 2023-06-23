@@ -1,7 +1,7 @@
 import { initialCards } from '../scripts/cards.js';
-import { Card } from '../scripts/card.js';
-import { FormValidator } from '../scripts/formValidator.js';
 import { configFormSelector, popupEditElement, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, nameElement, infoElement, popupElement, popupAddButtonElement, popupAddForm, titleInputElement, linkInputElement } from '../scripts/constants.js';
+import { FormValidator } from "../scripts/formValidator";
+import { Card } from "../scripts/card";
 
 
 function closePopupEsc(evt) {
