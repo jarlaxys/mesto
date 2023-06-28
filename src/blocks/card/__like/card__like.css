@@ -1,7 +1,7 @@
 .card__like {
   background-color: transparent;
   border: none;
-  background-image: url(like.svg);
+  background-image: url('../../../image/like.svg');
   background-repeat: no-repeat;
   width: 22px;
   height: 19px;
@@ -12,6 +12,6 @@
 }
 
 .card__like:active {
-  background-image: url(like-dark.svg);
+  background-image: url('../../../image/like-dark.svg');
   opacity: 1;
 }
