@@ -1,11 +1,12 @@
-import { initialCards } from '../scripts/cards.js';
-import { configFormSelector, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, popupAddButtonElement, popupAddForm } from '../scripts/constants.js';
-import { FormValidator } from "../scripts/formValidator.js";
-import { Card } from "../scripts/card.js";
-import {PopupWithImage} from "../scripts/PopupWithImage.js";
-import {PopupWithForm} from "../scripts/PopupWithForm.js";
-import {Section} from "../scripts/section.js";
-import {UserInfo} from "../scripts/userInfo.js";
+import { initialCards } from './scripts/cards.js';
+import { configFormSelector, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, popupAddButtonElement, popupAddForm } from './scripts/constants.js';
+import { FormValidator } from "./scripts/formValidator.js";
+import { Card } from "./scripts/card.js";
+import {PopupWithImage} from "./scripts/PopupWithImage.js";
+import {PopupWithForm} from "./scripts/PopupWithForm.js";
+import {Section} from "./scripts/section.js";
+import {UserInfo} from "./scripts/userInfo.js";
+import  './pages/index.css';
 
 const popupAddCard = new PopupWithForm('#add-popup', {
   callbackSubmitForm: (values) => {
