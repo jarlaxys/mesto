@@ -1,12 +1,12 @@
-import { initialCards } from './scripts/cards.js';
-import { configFormSelector, popupEditButtonElement, popupEditForm, nameInputElement, infoInputElement, popupAddButtonElement, popupAddForm } from './scripts/constants.js';
-import { FormValidator } from "./scripts/formValidator.js";
-import { Card } from "./scripts/card.js";
-import {PopupWithImage} from "./scripts/PopupWithImage.js";
-import {PopupWithForm} from "./scripts/PopupWithForm.js";
-import {Section} from "./scripts/section.js";
-import {UserInfo} from "./scripts/userInfo.js";
-import  './pages/index.css';
+import { initialCards } from '../utils/cards.js';
+import { configFormSelector, profileEditButton, popupEditForm, nameInputElement, infoInputElement, AddCardButton, popupAddCardForm } from '../utils/constants.js';
+import { FormValidator } from "../components/FormValidator.js";
+import { Card } from "../components/Card.js";
+import {PopupWithImage} from "../components/PopupWithImage.js";
+import {PopupWithForm} from "../components/PopupWithForm.js";
+import {Section} from "../components/Section.js";
+import {UserInfo} from "../components/UserInfo.js";
+import  './index.css';
 
 const popupAddCard = new PopupWithForm('#add-popup', {
   callbackSubmitForm: (values) => {
@@ -17,7 +17,7 @@ const popupAddCard = new PopupWithForm('#add-popup', {
     popupAddCard.close();
   }
 });
-popupAddButtonElement.addEventListener('click', function () {
+AddCardButton.addEventListener('click', function () {
   popupAddCard.open();
   addCardFormValidation.resetValidation();
   addCardFormValidation.disabledButton()
@@ -35,7 +35,7 @@ const popupEditProfile = new PopupWithForm('#edit-popup', {
       popupEditProfile.close();
     }
   });
-popupEditButtonElement.addEventListener('click', function () {
+profileEditButton.addEventListener('click', function () {
   popupEditProfile.open();
   const {name, job} = userInfo.getUserInfo();
   nameInputElement.value = name;
@@ -62,7 +62,7 @@ const addAllCards = new Section({
   }, '.gallery__cards');
 addAllCards.renderAllCards();
 
-const addCardFormValidation = new FormValidator(popupAddForm, configFormSelector);
+const addCardFormValidation = new FormValidator(popupAddCardForm, configFormSelector);
 const editCardFormValidation = new FormValidator(popupEditForm, configFormSelector);
 
 addCardFormValidation.enableValidation();
