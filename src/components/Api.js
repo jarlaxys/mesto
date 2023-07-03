@@ -1,20 +1,52 @@
-class Api {
+export class Api {
     constructor(options) {
-        this.baseUrl = options.baseUrl;
-        this.headers = options.headers;
+        this._baseUrl = options.baseUrl;
+        this._headers = options.headers;
     }
 
-    getInitialCards() {
-        // ...
+    _checkAnswer(res) {
+        if (res.ok) {
+            return res.json()
+        } else {
+            throw new Error(`Ошибка: ${res.status}`)
+        }
     }
 
-    // другие методы работы с API
+    getUserInfo = async () => {
+        const res = await fetch(`${this._baseUrl}/users/me`, {
+            headers: this._headers
+        })
+        return this._checkAnswer(res)
+    }
+
+    getCards = async () => {
+        const res = await fetch(`${this._baseUrl}/cards`, {
+            headers: this._headers
+        })
+        return this._checkAnswer(res)
+    }
+
+    patchUserInfo = async (values) => {
+        const res = await fetch(`${this._baseUrl}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: values.name,
+                about: values.job
+            })
+        })
+        return this._checkAnswer(res)
+    }
 }
 
-const api = new Api({
+export const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-70',
     headers: {
         authorization: '507ca991-9d37-4650-bfef-b2e1fd6da74a',
         'Content-Type': 'application/json'
     }
 });
+
+
+api.patchUserInfo()
+.then(res => console.log(res))

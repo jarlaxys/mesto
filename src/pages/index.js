@@ -7,6 +7,8 @@ import {PopupWithForm} from "../components/PopupWithForm.js";
 import {Section} from "../components/Section.js";
 import {UserInfo} from "../components/UserInfo.js";
 import  './index.css';
+import {Api, api} from "../components/Api.js";
+import {data} from "autoprefixer";
 
 const popupAddCard = new PopupWithForm('#add-popup', {
   callbackSubmitForm: (values) => {
@@ -25,16 +27,32 @@ AddCardButton.addEventListener('click', function () {
 popupAddCard.setEventListeners();
 
 
-const userInfo = new UserInfo('.profile__title', '.profile__subtitle')
+const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar')
+
+
+api.getUserInfo()
+    .then((res) => {
+        userInfo.setUserInfo({
+            name: res.name,
+            info: res.about,
+            avatar: res.avatar})
+    })
+
 
 const popupEditProfile = new PopupWithForm('#edit-popup', {
   callbackSubmitForm: (values) => {
-      userInfo.setUserInfo({
-        name: values.name,
-        info: values.job });
+      api.patchUserInfo(values)
+          .then((res) => {
+              userInfo.setUserInfo({
+                  name: res.name,
+                  info: res.about,
+                  avatar: res.avatar})
+          })
+          .catch((err) => console.log(`ебучая ошибка: ${err}`))
       popupEditProfile.close();
     }
   });
+
 profileEditButton.addEventListener('click', function () {
   popupEditProfile.open();
   const {name, job} = userInfo.getUserInfo();
@@ -51,16 +69,21 @@ function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
-function getCard(item) {
-  const card = new Card(item.name, item.link, '#card', handleCardClick);
+function getCard(res) {
+  const card = new Card(res.name, res.link, '#card', handleCardClick);
   return card.newCard();
 }
 
-const addAllCards = new Section({
-  items: initialCards,
-  renderer: getCard
-  }, '.gallery__cards');
-addAllCards.renderAllCards();
+api.getCards()
+    .then((res) => {
+      const addAllCards = new Section({
+        items: res,
+        renderer: getCard
+      }, '.gallery__cards');
+
+      addAllCards.renderAllCards(res);
+    })
+
 
 const addCardFormValidation = new FormValidator(popupAddCardForm, configFormSelector);
 const editCardFormValidation = new FormValidator(popupEditForm, configFormSelector);
