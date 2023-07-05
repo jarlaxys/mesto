@@ -37,6 +37,18 @@ export class Api {
         })
         return this._checkAnswer(res)
     }
+
+    postNewCard = async (values) => {
+        const res = await fetch(`${this._baseUrl}/cards`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: values.title,
+                link: values.link
+            })
+        })
+        return this._checkAnswer(res)
+    }
 }
 
 export const api = new Api({

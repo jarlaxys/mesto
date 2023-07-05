@@ -1,7 +1,10 @@
+import {deletePopup} from '../pages/index.js';
+
 export class Card {
-  constructor(name, link, templateElement, handleCardClick) {
+  constructor(name, link, like, templateElement, handleCardClick) {
     this._name = name;
     this._link = link;
+    this._like = like;
     this._templateElement = templateElement;
     this._handleCardClick = handleCardClick;
   }
@@ -19,7 +22,7 @@ export class Card {
       this._handleCardClick(this._name, this._link);
     });
     this._cardElement.querySelector('.card__delete').addEventListener('click', () => {
-      this._removeCard();
+      deletePopup.open();
     });
     this._cardElement.querySelector('.card__like').addEventListener('click', (event) => {
       this._likeCard(event);
@@ -38,6 +41,7 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._cardElement.querySelector('.card__txt').textContent = this._name;
+    this._cardElement.querySelector('.card__likes-counter').textContent = this._like;
 
     this._setEventListeners();
 

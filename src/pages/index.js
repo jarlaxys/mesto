@@ -9,13 +9,20 @@ import {UserInfo} from "../components/UserInfo.js";
 import  './index.css';
 import {Api, api} from "../components/Api.js";
 import {data} from "autoprefixer";
+import {Popup} from "../components/Popup";
+import {PopupWithDelete} from "../components/PopupWithDelete";
 
 const popupAddCard = new PopupWithForm('#add-popup', {
   callbackSubmitForm: (values) => {
-    addAllCards.addItem((getCard({
-      name: values.title,
-      link: values.link
-    })));
+      const addAllCards = new Section({
+          items: null,
+          renderer: getCard
+      }, '.gallery__cards');
+      api.postNewCard(values)
+          .then((res) => {
+              addAllCards.addItem((getCard(res)));
+          })
+          .catch((err) => console.log(err))
     popupAddCard.close();
   }
 });
@@ -69,8 +76,10 @@ function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
+export const deletePopup = new PopupWithDelete('#delete-card')
+
 function getCard(res) {
-  const card = new Card(res.name, res.link, '#card', handleCardClick);
+  const card = new Card(res.name, res.link, res.likes.length, '#card', handleCardClick);
   return card.newCard();
 }
 
