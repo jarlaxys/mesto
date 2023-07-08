@@ -4,4 +4,8 @@
   height: 120px;
   width: 120px;
   object-fit: cover;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  z-index: 2;
+  transition: all 0.2s ease;
 }

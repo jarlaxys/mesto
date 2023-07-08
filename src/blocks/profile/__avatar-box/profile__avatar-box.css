@@ -1,0 +1,8 @@
+.profile__avatar-box {
+    display: grid;
+}
+
+.profile__avatar-box:hover .profile__avatar {
+    z-index: 0;
+    opacity: 0.2;
+}

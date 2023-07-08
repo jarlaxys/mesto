@@ -13,10 +13,12 @@
   </header>
   <main class="content">
     <section class="profile">
-      <img src="#" alt="фото профиля" class="profile__avatar">
+      <div class="profile__avatar-box"><img src="#" alt="фото профиля" class="profile__avatar">
+      <button aria-label="Редактирования аватар" type="button" class="button profile__edit-avatar"><img
+              src="<%=require('./images/EditButton.svg')%>" class="profile__img-edit-avatar" alt="Кнопка редактировать профиль"></button></div>
       <div class="profile__info">
         <h1 class="profile__title"></h1>
-        <button class="button profile__edit-profile" type="button" aria-label="Редактировать"><img
+        <button class="button profile__edit-profile" type="button" aria-label="Редактировать профиль"><img
           src="<%=require('./images/EditButton.svg')%>" class="profile__img-edit" alt="Кнопка редактировать профиль"></button>
         <p class="profile__subtitle"></p>
       </div>
@@ -40,6 +42,18 @@
         <span id="name-error" class="error"></span>
         <input type="text" class="popup__input popup__input_info_job" name="job" required minlength="2" maxlength="200">
         <span id="job-error" class="error"></span>
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup" id="edit-avatar">
+    <div class="popup__container">
+      <button class="popup__close" type="button" id="avatar-close"><img src="<%=require('./images/CloseIcon.svg')%>"
+                                                                      class="popup__img-close" alt="Кнопка закрытия формы"></button>
+      <form class="popup__content" name="edit-avatar">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <input type="url" class="popup__input popup__input_info_link" name="avatar" placeholder="Ссылка на картинку" required>
+        <span id="avatar-error" class="error"></span>
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
     </div>

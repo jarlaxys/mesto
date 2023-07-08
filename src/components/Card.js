@@ -1,4 +1,4 @@
-import { deletePopup } from "../pages/index.js";
+import { deletePopup } from "../pages";
 import { api } from "./Api.js";
 
 export class Card {
@@ -13,8 +13,11 @@ export class Card {
     this._handleCardClick = handleCardClick;
   }
 
-  _likeCard(event) {
+  _likeCard() {
+    /*
     event.target.classList.toggle("card__like_active");
+*/
+    return this._like.some((like) => like._id === this._userId);
   }
 
   _removeCard() {
@@ -33,9 +36,39 @@ export class Card {
 
     this._cardElement
       .querySelector(".card__like")
-      .addEventListener("click", (event) => {
-        this._likeCard(event);
+      .addEventListener("click", () => {
+        if (this._likeCard()) {
+          api.deleteLike(this._cardId).then((res) => {
+            this._cardElement
+              .querySelector(".card__like")
+              .classList.remove("card__like_active");
+            this._like = res.likes;
+            this._cardElement.querySelector(
+              ".card__likes-counter",
+            ).textContent = this._like.length;
+          });
+        } else {
+          api.addLike(this._cardId).then((res) => {
+            this._cardElement
+              .querySelector(".card__like")
+              .classList.add("card__like_active");
+            this._like = res.likes;
+            this._cardElement.querySelector(
+              ".card__likes-counter",
+            ).textContent = this._like.length;
+          });
+        }
       });
+
+    if (this._likeCard()) {
+      this._cardElement
+        .querySelector(".card__like")
+        .classList.add("card__like_active");
+    } else {
+      this._cardElement
+        .querySelector(".card__like")
+        .classList.remove("card__like_active");
+    }
 
     if (this._userId === this._authorId) {
       this._cardElement

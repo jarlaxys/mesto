@@ -6,6 +6,8 @@ import {
   popupAddCardForm,
   popupEditForm,
   profileEditButton,
+  editAvatarButton,
+  popupEditAvatarForm,
 } from "../utils/constants.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
@@ -35,6 +37,23 @@ AddCardButton.addEventListener("click", function () {
 });
 popupAddCard.setEventListeners();
 
+const popupEditAvatar = new PopupWithForm("#edit-avatar", {
+  callbackSubmitForm: (values) => {
+    api.setAvatar(values).then((res) => {
+      console.log(res);
+      userInfo.setAvatar({
+        avatar: res.avatar,
+      });
+    });
+    popupEditAvatar.close();
+  },
+});
+editAvatarButton.addEventListener("click", function () {
+  popupEditAvatar.open();
+  editAvatarFormValidation.resetValidation();
+});
+popupEditAvatar.setEventListeners();
+
 const userInfo = new UserInfo(
   ".profile__title",
   ".profile__subtitle",
@@ -50,6 +69,7 @@ const popupEditProfile = new PopupWithForm("#edit-popup", {
           name: res.name,
           info: res.about,
           avatar: res.avatar,
+          id: res._id,
         });
       })
       .catch((err) => console.log(`ебучая ошибка: ${err}`));
@@ -117,6 +137,11 @@ const editCardFormValidation = new FormValidator(
   popupEditForm,
   configFormSelector,
 );
+const editAvatarFormValidation = new FormValidator(
+  popupEditAvatarForm,
+  configFormSelector,
+);
 
 addCardFormValidation.enableValidation();
 editCardFormValidation.enableValidation();
+editAvatarFormValidation.enableValidation();

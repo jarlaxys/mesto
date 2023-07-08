@@ -57,6 +57,33 @@ export class Api {
     });
     return this._checkAnswer(res);
   };
+
+  addLike = async (cardId) => {
+    const res = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    });
+    return this._checkAnswer(res);
+  };
+
+  deleteLike = async (cardId) => {
+    const res = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+    return this._checkAnswer(res);
+  };
+
+  setAvatar = async (values) => {
+    const res = await fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: values.avatar,
+      }),
+    });
+    return this._checkAnswer(res);
+  };
 }
 
 export const api = new Api({
