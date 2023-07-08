@@ -20,13 +20,9 @@ export class Card {
     return this._like.some((like) => like._id === this._userId);
   }
 
-  _removeCard() {
-    return api
-      .deleteCard(this._cardId)
-      .then(() => {
-        this._cardElement.remove();
-      })
-      .catch((err) => Promise.reject(err));
+  async _removeCard() {
+    await api.deleteCard(this._cardId);
+    this._cardElement.remove();
   }
 
   _setEventListeners() {

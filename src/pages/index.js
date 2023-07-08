@@ -20,14 +20,9 @@ import { api } from "../components/Api.js";
 import { PopupWithDelete } from "../components/PopupWithDelete";
 
 const popupAddCard = new PopupWithForm("#add-popup", {
-  callbackSubmitForm: (values) => {
-    api
-      .postNewCard(values)
-      .then((res) => {
-        addAllCards.renderItem(getCard(res));
-      })
-      .catch((err) => console.log(err))
-      .finally(() => popupAddCard.close());
+  callbackSubmitForm: async (values) => {
+    const res = await api.postNewCard(values);
+    addAllCards.renderItem(getCard(res));
   },
 });
 AddCardButton.addEventListener("click", function () {
@@ -38,14 +33,11 @@ AddCardButton.addEventListener("click", function () {
 popupAddCard.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm("#edit-avatar", {
-  callbackSubmitForm: (values) => {
-    api.setAvatar(values).then((res) => {
-      console.log(res);
-      userInfo.setAvatar({
-        avatar: res.avatar,
-      });
+  callbackSubmitForm: async (values) => {
+    const res = await api.setAvatar(values);
+    userInfo.setAvatar({
+      avatar: res.avatar,
     });
-    popupEditAvatar.close();
   },
 });
 editAvatarButton.addEventListener("click", function () {
@@ -61,19 +53,14 @@ const userInfo = new UserInfo(
 );
 
 const popupEditProfile = new PopupWithForm("#edit-popup", {
-  callbackSubmitForm: (values) => {
-    api
-      .patchUserInfo(values)
-      .then((res) => {
-        userInfo.setUserInfo({
-          name: res.name,
-          info: res.about,
-          avatar: res.avatar,
-          id: res._id,
-        });
-      })
-      .catch((err) => console.log(`ебучая ошибка: ${err}`));
-    popupEditProfile.close();
+  callbackSubmitForm: async (values) => {
+    const res = await api.patchUserInfo(values);
+    userInfo.setUserInfo({
+      name: res.name,
+      info: res.about,
+      avatar: res.avatar,
+      id: res._id,
+    });
   },
 });
 
