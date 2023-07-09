@@ -20,8 +20,9 @@ import { api } from "../components/Api.js";
 import { PopupWithDelete } from "../components/PopupWithDelete";
 
 const popupAddCard = new PopupWithForm("#add-popup", {
-  callbackSubmitForm: async (values) => {
-    await api
+  callbackSubmitForm: (values) => {
+    popupAddCard.setLoading(true);
+    api
       .postNewCard(values)
       .then((res) => {
         addAllCards.renderItem(getCard(res));
@@ -29,7 +30,7 @@ const popupAddCard = new PopupWithForm("#add-popup", {
       })
       .catch((err) => console.log(`Ошибка сохранения: ${err}`))
       .finally(() => {
-        popupAddCard._saveButton.textContent = popupAddCard._buttonText;
+        popupAddCard.setLoading(false);
       });
   },
 });
@@ -41,8 +42,9 @@ AddCardButton.addEventListener("click", function () {
 popupAddCard.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm("#edit-avatar", {
-  callbackSubmitForm: async (values) => {
-    await api
+  callbackSubmitForm: (values) => {
+    popupEditAvatar.setLoading(true);
+    api
       .setAvatar(values)
       .then((res) => {
         userInfo.setAvatar({
@@ -52,7 +54,7 @@ const popupEditAvatar = new PopupWithForm("#edit-avatar", {
       })
       .catch((err) => console.log(`Ошибка сохранения: ${err}`))
       .finally(() => {
-        popupEditAvatar._saveButton.textContent = popupEditAvatar._buttonText;
+        popupEditAvatar.setLoading(false);
       });
   },
 });
@@ -69,8 +71,9 @@ const userInfo = new UserInfo(
 );
 
 const popupEditProfile = new PopupWithForm("#edit-popup", {
-  callbackSubmitForm: async (values) => {
-    await api
+  callbackSubmitForm: (values) => {
+    popupEditProfile.setLoading(true);
+    api
       .patchUserInfo(values)
       .then((res) => {
         userInfo.setUserInfo({
@@ -83,7 +86,7 @@ const popupEditProfile = new PopupWithForm("#edit-popup", {
       })
       .catch((err) => console.log(`Ошибка сохранения: ${err}`))
       .finally(() => {
-        popupEditProfile._saveButton.textContent = popupEditProfile._buttonText;
+        popupEditProfile.setLoading(false);
       });
   },
 });
@@ -99,16 +102,17 @@ popupEditProfile.setEventListeners();
 const popupImage = new PopupWithImage("#img-popup");
 popupImage.setEventListeners();
 
-export const deletePopup = new PopupWithDelete("#delete-card", {
-  callbackSubmitForm: async (cardId) => {
-    api
-      .deleteCard(cardId)
-      .then(() => {
-        deletePopup.close();
-      })
-      .catch((err) => console.log(`Ошибка удаления карточки: ${err}`));
-  },
-});
+const handleDeleteCard = (cardId, cardEl) => {
+  api
+    .deleteCard(cardId)
+    .then(() => {
+      deletePopup.close();
+      cardEl.remove();
+    })
+    .catch((err) => console.log(`Ошибка удаления карточки: ${err}`));
+};
+
+export const deletePopup = new PopupWithDelete("#delete-card");
 deletePopup.setEventListeners();
 
 const getCard = (oneCard) => {
@@ -117,7 +121,23 @@ const getCard = (oneCard) => {
       popupImage.open(name, link);
     },
     openPopupDelete: (cardId, cardEl) => {
-      deletePopup.open(cardId, cardEl);
+      deletePopup.open(() => handleDeleteCard(cardId, cardEl));
+    },
+    addLikeCard: (cardId) => {
+      api
+        .addLike(cardId)
+        .then((res) => {
+          card.addLike(res.likes);
+        })
+        .catch((err) => console.log(`Ошибка постановки лайка: ${err}`));
+    },
+    removeLikeCard: (cardId) => {
+      api
+        .deleteLike(cardId)
+        .then((res) => {
+          card.removeLike(res.likes);
+        })
+        .catch((err) => console.log(`Ошибка снятия лайка: ${err}`));
     },
   });
   return card.newCard();

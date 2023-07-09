@@ -9,6 +9,7 @@ export class UserInfo {
     return {
       name: this._name.textContent,
       job: this._info.textContent,
+      id: this._id,
     };
   }
 
