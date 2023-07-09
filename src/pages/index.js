@@ -21,8 +21,16 @@ import { PopupWithDelete } from "../components/PopupWithDelete";
 
 const popupAddCard = new PopupWithForm("#add-popup", {
   callbackSubmitForm: async (values) => {
-    const res = await api.postNewCard(values);
-    addAllCards.renderItem(getCard(res));
+    await api
+      .postNewCard(values)
+      .then((res) => {
+        addAllCards.renderItem(getCard(res));
+        popupAddCard.close();
+      })
+      .catch((err) => console.log(`Ошибка сохранения: ${err}`))
+      .finally(() => {
+        popupAddCard._saveButton.textContent = popupAddCard._buttonText;
+      });
   },
 });
 AddCardButton.addEventListener("click", function () {
@@ -34,10 +42,18 @@ popupAddCard.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm("#edit-avatar", {
   callbackSubmitForm: async (values) => {
-    const res = await api.setAvatar(values);
-    userInfo.setAvatar({
-      avatar: res.avatar,
-    });
+    await api
+      .setAvatar(values)
+      .then((res) => {
+        userInfo.setAvatar({
+          avatar: res.avatar,
+        });
+        popupEditAvatar.close();
+      })
+      .catch((err) => console.log(`Ошибка сохранения: ${err}`))
+      .finally(() => {
+        popupEditAvatar._saveButton.textContent = popupEditAvatar._buttonText;
+      });
   },
 });
 editAvatarButton.addEventListener("click", function () {
@@ -54,16 +70,23 @@ const userInfo = new UserInfo(
 
 const popupEditProfile = new PopupWithForm("#edit-popup", {
   callbackSubmitForm: async (values) => {
-    const res = await api.patchUserInfo(values);
-    userInfo.setUserInfo({
-      name: res.name,
-      info: res.about,
-      avatar: res.avatar,
-      id: res._id,
-    });
+    await api
+      .patchUserInfo(values)
+      .then((res) => {
+        userInfo.setUserInfo({
+          name: res.name,
+          info: res.about,
+          avatar: res.avatar,
+          id: res._id,
+        });
+        popupEditProfile.close();
+      })
+      .catch((err) => console.log(`Ошибка сохранения: ${err}`))
+      .finally(() => {
+        popupEditProfile._saveButton.textContent = popupEditProfile._buttonText;
+      });
   },
 });
-
 profileEditButton.addEventListener("click", function () {
   popupEditProfile.open();
   const { name, job } = userInfo.getUserInfo();
@@ -76,45 +99,48 @@ popupEditProfile.setEventListeners();
 const popupImage = new PopupWithImage("#img-popup");
 popupImage.setEventListeners();
 
-function handleCardClick(name, link) {
-  popupImage.open(name, link);
-}
-
-export const deletePopup = new PopupWithDelete("#delete-card");
+export const deletePopup = new PopupWithDelete("#delete-card", {
+  callbackSubmitForm: async (cardId) => {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        deletePopup.close();
+      })
+      .catch((err) => console.log(`Ошибка удаления карточки: ${err}`));
+  },
+});
 deletePopup.setEventListeners();
 
 const getCard = (oneCard) => {
-  const card = new Card(userInfo._id, oneCard, "#card", handleCardClick);
+  const card = new Card(userInfo, oneCard, "#card", {
+    handleCardClick: (name, link) => {
+      popupImage.open(name, link);
+    },
+    openPopupDelete: (cardId, cardEl) => {
+      deletePopup.open(cardId, cardEl);
+    },
+  });
   return card.newCard();
 };
 
 const addAllCards = new Section(
   {
-    items: [],
     renderer: getCard,
   },
   ".gallery__cards",
 );
 
-api
-  .getUserInfo()
-  .then((userRes) => {
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([userRes, cardsRes]) => {
     userInfo.setUserInfo({
       name: userRes.name,
       info: userRes.about,
       avatar: userRes.avatar,
       id: userRes._id,
     });
+    addAllCards.renderAllCards(cardsRes.reverse());
   })
-  .catch((err) => {
-    console.log(`Ошибка загрузки данных пользователя: ${err}`);
-  });
-
-api.getCards().then((cardsRes) => {
-  console.log(cardsRes);
-  addAllCards.setItems(cardsRes.reverse());
-  addAllCards.renderAllCards();
-});
+  .catch((err) => console.log(`Ошибка загрузки данных: ${err}`));
 
 const addCardFormValidation = new FormValidator(
   popupAddCardForm,

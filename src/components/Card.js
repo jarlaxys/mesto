@@ -2,26 +2,23 @@ import { deletePopup } from "../pages";
 import { api } from "./Api.js";
 
 export class Card {
-  constructor(userId, oneCard, templateElement, handleCardClick) {
+  constructor(userInfo, oneCard, templateElement, metods) {
     this._name = oneCard.name;
     this._link = oneCard.link;
     this._like = oneCard.likes;
-    this._userId = userId;
+    this._userId = userInfo._id;
     this._authorId = oneCard.owner._id;
     this._cardId = oneCard._id;
     this._templateElement = templateElement;
-    this._handleCardClick = handleCardClick;
+    this._handleCardClick = metods.handleCardClick;
+    this._openPopupDelete = metods.openPopupDelete;
   }
 
   _likeCard() {
-    /*
-    event.target.classList.toggle("card__like_active");
-*/
     return this._like.some((like) => like._id === this._userId);
   }
 
   async _removeCard() {
-    await api.deleteCard(this._cardId);
     this._cardElement.remove();
   }
 
@@ -70,7 +67,7 @@ export class Card {
       this._cardElement
         .querySelector(".card__delete")
         .addEventListener("click", () => {
-          deletePopup.open(() => this._removeCard());
+          this._openPopupDelete(this._cardId, this._cardElement);
         });
     } else {
       this._deleteIcon.remove();
